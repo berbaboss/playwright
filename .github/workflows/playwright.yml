@@ -23,6 +23,7 @@ jobs:
       run: npm run env:sit    
     - name: ANY REPROT - GH Pages Push - SAME REPO
       uses: PavanMudigonda/html-reporter-github-pages@v1.3
+      if: ${{ always() }}
       with:
         test_results: playwright-report
         keep_reports: 20
