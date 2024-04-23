@@ -37,6 +37,8 @@ const config = {
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
+    permissions: ['geolocation'],
+    geolocation: { latitude: 13.7130742, longitude: 100.405479 },
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
