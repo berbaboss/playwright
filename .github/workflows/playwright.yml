@@ -18,7 +18,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run install corss env
-      run: nnpm install cross-env 
+      run: npm install cross-env 
     - name: Run Playwright tests
       run: npm run env:sit    
     - name: ANY REPROT - GH Pages Push - SAME REPO
