@@ -18,7 +18,9 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npm run env:sit     
+      run: npm run env:sit    
+    - name: Run Playwright tests
+      run: nnpm install cross-env 
     - name: ANY REPROT - GH Pages Push - SAME REPO
       uses: PavanMudigonda/html-reporter-github-pages@v1.3
       with:
