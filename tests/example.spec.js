@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const dataPath = require(`../testData/${process.env.test_env}.json`);
 
-test('Goto google then search pizza', async ({ page }) => {
+test('Goto google then search robotframework', async ({ page }) => {
   await page.goto('https://www.google.co.th/');
   console.log(dataPath.product)
   await expect(page.locator('xpath=//img[@alt="Google"]')).toBeVisible();
