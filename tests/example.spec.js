@@ -8,6 +8,6 @@ test('Goto google then search robotframework', async ({ page }) => {
   await expect(page.locator('xpath=//img[@alt="Google"]')).toBeVisible();
   await page.locator('xpath=(//textarea)[1]').fill(dataPath.product);
   await page.keyboard.press('Enter');
-  await expect(page.locator('xpath=//textarea[@aria-label="ค้นหา"]')).toHaveText(dataPath.product);
+  await expect(page.locator('xpath=//textarea[@name="q"]')).toHaveText(dataPath.product);
 });
 
