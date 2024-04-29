@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "5234622e-ce65-4bfa-8817-d872b9b81dc1",
+		"name": "Demo-API-Flow Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13811851",
+		"_collection_link": "https://crimson-firefly-151931.postman.co/workspace/Training-Postman~37fcf74a-4c15-4b34-8d4a-c1e864862b2d/collection/13811851-5234622e-ce65-4bfa-8817-d872b9b81dc1?action=share&source=collection_link&creator=13811851"
+	},
+	"item": [
+		{
+			"name": "S1-Order Books - Success",
+			"item": [
+				{
+					"name": "1-Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-List Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"    \"type\": \"array\",\r",
+									"    \"items\": [{\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"            \"id\": { \"type\": \"number\" },\r",
+									"            \"name\": { \"type\": \"string\" },\r",
+									"            \"type\": { \"type\": \"string\" },\r",
+									"            \"available\": { \"type\": \"boolean\" }\r",
+									"        },\r",
+									"        \"required\": [\r",
+									"            \"id\",\r",
+									"            \"name\",\r",
+									"            \"type\",\r",
+									"            \"available\"]\r",
+									"    }]\r",
+									"};\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "non-fiction",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3-Book Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"id\": { \"type\": \"number\" },\r",
+									"        \"name\": { \"type\": \"string\" },\r",
+									"        \"author\": { \"type\": \"string\" },\r",
+									"        \"isbn\": { \"type\": \"string\" },\r",
+									"        \"type\": { \"type\": \"string\" },\r",
+									"        \"price\": { \"type\": \"number\" },\r",
+									"        \"current-stock\": { \"type\": \"number\" },\r",
+									"        \"available\": { \"type\": \"boolean\" }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"id\",\r",
+									"        \"name\",\r",
+									"        \"type\",\r",
+									"        \"available\"]\r",
+									"};\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate 'type' as 'fiction' and 'non-fiction'\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.type).to.be.oneOf([\"fiction\", \"non-fiction\"]);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books/:bookId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books",
+								":bookId"
+							],
+							"variable": [
+								{
+									"key": "bookId",
+									"value": "{{bookId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4-Authentication API - Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.test(\"Status code is 409\", function () {\r",
+									"//     pm.response.to.have.status(409);\r",
+									"// });\r",
+									"\r",
+									"// pm.test(\"Check duplicate error message\", function () {\r",
+									"//     var jsonData = pm.response.json();\r",
+									"//     pm.expect(jsonData.error).to.eql(\"API client already registered. Try a different email.\");\r",
+									"// });\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate access token\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.accessToken).to.not.equal(null);\r",
+									"    pm.environment.set(\"token\", jsonData.accessToken);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var lastnameRandom = pm.variables.replaceIn('{{$randomLastName}}')\r",
+									"pm.environment.set(\"lastName\", lastnameRandom);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientName\": \"Boss {{lastName}}\",\r\n    \"clientEmail\": \"{{lastName}}@example.Boss.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api-clients",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api-clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5-Submit an order books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate 'OrderId' have value\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.orderId).to.not.eql(null);\r",
+									"    pm.environment.set(\"orderId\", jsonData.orderId);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookId\": {{bookId}},\r\n  \"customerName\": \"API test by {{lastName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6-List all orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"    \"type\": \"array\",\r",
+									"    \"items\": [{\r",
+									"        \"type\": \"object\",\r",
+									"        \"properties\": {\r",
+									"            \"id\": { \"type\" : \"string\" },\r",
+									"            \"bookId\": { \"type\" : \"number\" },\r",
+									"            \"customerName\": { \"type\" : \"string\" },\r",
+									"            \"createdBy\": { \"type\" : \"string\" },\r",
+									"            \"quantity\": { \"type\" : \"number\" },\r",
+									"            \"timestamp\": { \"type\" : \"number\" }\r",
+									"        },\r",
+									"        \"required\": [\r",
+									"            \"id\",\r",
+									"            \"bookId\",\r",
+									"            \"quantity\",\r",
+									"            \"createdBy\"]\r",
+									"    }]\r",
+									"};\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"var orderId = pm.environment.get(\"orderId\");\r",
+									"pm.test(\"Body matches 'id'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(orderId);\r",
+									"});\r",
+									"\r",
+									"var lastname = pm.environment.get(\"lastName\");\r",
+									"pm.test(\"Check correct 'customerName' after update\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"API test by \"+lastname);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7-Order Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"id\": { \"type\": \"string\" },\r",
+									"        \"bookId\": { \"type\": \"number\" },\r",
+									"        \"customerName\": { \"type\": \"string\" },\r",
+									"        \"createdBy\": { \"type\": \"string\" },\r",
+									"        \"quantity\": { \"type\": \"number\" },\r",
+									"        \"timestamp\": { \"type\": \"number\" }\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"id\",\r",
+									"        \"bookId\",\r",
+									"        \"customerName\",\r",
+									"        \"quantity\"]\r",
+									"};\r",
+									"\r",
+									"pm.test('Schema is valid', function () {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"var bookID = pm.environment.get(\"bookId\");\r",
+									"pm.test(\"Check correct 'bookId'\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.bookId).to.eql(parseInt(bookID));\r",
+									"});\r",
+									"\r",
+									"var lastname = pm.environment.get(\"lastName\");\r",
+									"pm.test(\"Check correct 'customerName'\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.customerName).to.eql(\"API test by \"+lastname);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/:orderId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "{{orderId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"bookId\", 1);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://simple-books-api.glitch.me"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

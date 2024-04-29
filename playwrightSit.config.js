@@ -57,14 +57,14 @@ const config = {
       },
     },
 
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-        screenshot: "only-on-failure",
-        video: "retain-on-failure"
-      },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //     screenshot: "only-on-failure",
+    //     video: "retain-on-failure"
+    //   },
+    // },
 
     // {
     //   name: 'webkit',
@@ -88,14 +88,14 @@ const config = {
     // },
 
     /* Test against branded browsers. */
-    {
-      name: 'Microsoft Edge',
-      use: {
-        channel: 'msedge',
-        screenshot: "only-on-failure",
-        video: "retain-on-failure"
-      },
-    },
+    // {
+    //   name: 'Microsoft Edge',
+    //   use: {
+    //     channel: 'msedge',
+    //     screenshot: "only-on-failure",
+    //     video: "retain-on-failure"
+    //   },
+    // },
     // {
     //   name: 'Google Chrome',
     //   use: {
