@@ -17,10 +17,8 @@ jobs:
     - name: Install dependencies
       run: npm install newman newman-reporter-htmlextra
       
-    - name: Run Newman
-      run: |
-        mkdir -p newman
-        newman run ./api-test/Demo-API-Flow.postman_collection.json -r htmlextra --reporter-htmlextra-export ./newman/report.html
+    - name: Run Newman test
+      run: newman run ./api-test/Demo-API-Flow.postman_collection.json -r htmlextra --reporter-htmlextra-export ./newman/report.html
       
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
