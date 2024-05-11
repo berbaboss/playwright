@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "env:sit": "cross-env test_env=sit npx playwright test --config=playwrightSit.config.js --headed"
+    "env:sit": "cross-env test_env=sit npx playwright test --config=playwrightSit.config.js"
   },
   "keywords": [],
   "author": "",
